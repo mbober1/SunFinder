@@ -1,14 +1,9 @@
-#include <stdint.h>
-#include <stdio.h>
-#include "hardware/gpio.h"
 #include "hardware/adc.h"
-#include "pico/stdlib.h"
-#include "hardware/pwm.h"
-
-#include "pico/time.h"
-#include "hardware/irq.h"
 #include "servo.hpp"
 #include "math.h"
+#include "pico/stdlib.h"
+#include <stdint.h>
+
 
 #define ADC0 26
 #define ADC1 27
@@ -23,7 +18,6 @@ servo s2(PWM1, 3450, 5700);
 uint16_t sun[3];
 
 inline void sunMeasurement(uint16_t count) {
-
     for(uint8_t adc = 0; adc < 3; adc++) {
         adc_select_input(adc);
         uint32_t sum = 0;
@@ -49,11 +43,9 @@ int main() {
             else if(sun[0] < sun[1]) s1.move(1, 0);
         }
 
-        uint16_t sunDown = (sun[1]);
-
-        if(abs(sunDown - sun[2]) > EPSILON) {
-            if(sunDown > sun[2]) s2.move(1, 0);
-            else if(sunDown < sun[2]) s2.move(1, 1);
+        if(abs(sun[1] - sun[2]) > EPSILON) {
+            if(sun[1] > sun[2]) s2.move(1, 0);
+            else if(sun[1] < sun[2]) s2.move(1, 1);
         }
     }
     return 0;

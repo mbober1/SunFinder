@@ -1,6 +1,6 @@
 #include <stdint.h>
-#include "hardware/pwm.h"
 #include "pico/stdlib.h"
+#include "hardware/pwm.h"
 
 
 class servo
